@@ -19,7 +19,6 @@ const Products = () => {
             { id: 5, name: "Product 4", price: 15, category: "Sneakers" },
             { id: 6, name: "Product 5", price: 25, category: "electronics" },
             { id: 7, name: "Product 6", price: 75, category: "SmartPhone" },
-            // Add 15 more products
             { id: 8, name: "Product 7", price: 40, category: "electronics" },
             { id: 9, name: "Product 8", price: 50, category: "clothing" },
             { id: 10, name: "Product 9", price: 60, category: "electronics" },
@@ -73,12 +72,12 @@ const Products = () => {
 
     return (
         <div className="container mx-auto">
-            <h1 className="text-2xl font-semibold my-4">All Products</h1>
-            <div className="flex justify-end mb-4">
+            <h1 className="text-2xl font-semibold my-4 text-center">All Products</h1>
+            <div className="flex flex-col md:flex-row justify-center items-center mb-4">
                 <select
                     value={filterType}
                     onChange={(e) => setFilterType(e.target.value)}
-                    className="border p-2 mr-2"
+                    className="border p-2 mb-2 md:mb-0 md:mr-2"
                 >
                     {categories.map(category => (
                         <option key={category} value={category}>{category}</option>
@@ -93,7 +92,7 @@ const Products = () => {
                     <option value="price">Sort by Price</option>
                 </select>
             </div>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {currentProducts.map((product) => (
                     <ProductCard
                         key={product.id}

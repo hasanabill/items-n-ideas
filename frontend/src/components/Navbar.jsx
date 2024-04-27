@@ -47,7 +47,7 @@ const Navbar = () => {
                                     d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
                                 />
                             </svg>
-                            <span className="font-semibold">Items and Ideas</span>
+                            <span className="font-semibold">Items & Ideas</span>
                         </Link>
                     </div>
                     <div className="hidden md:flex items-center space-x-4">
