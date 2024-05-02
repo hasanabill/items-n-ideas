@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const ProductCard = ({ product }) => {
     return (
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
@@ -7,7 +9,7 @@ const ProductCard = ({ product }) => {
                 <p className="text-gray-600 mt-2">Price: ${product.price}</p>
                 <p className="text-gray-600">Category: {product.category}</p>
                 <div className="mt-4 flex justify-end">
-                    <button className="text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md transition-colors duration-300 ease-in-out">Add to Cart</button>
+                    <Link to={`${product.id}`} className="text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md transition-colors duration-300 ease-in-out">Details</Link>
                 </div>
             </div>
         </div>

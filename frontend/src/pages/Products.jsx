@@ -5,7 +5,7 @@ const Products = () => {
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [sortType, setSortType] = useState('name');
-    const [filterType, setFilterType] = useState('all');
+    const [filterType, setFilterType] = useState('All Products');
     const [categories, setCategories] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [productsPerPage] = useState(6);
@@ -39,11 +39,11 @@ const Products = () => {
         setFilteredProducts(sampleProducts);
 
         const uniqueCategories = [...new Set(sampleProducts.map(product => product.category))];
-        setCategories(['all', ...uniqueCategories]);
+        setCategories(['All Products', ...uniqueCategories]);
     }, []);
 
     useEffect(() => {
-        if (filterType === 'all') {
+        if (filterType === 'All Products') {
             setFilteredProducts(products);
         } else {
             const filtered = products.filter(product => product.category === filterType);
