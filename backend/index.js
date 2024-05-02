@@ -1,11 +1,20 @@
 const express = require('express');
 const app = express();
-const port = 5000;
+require('dotenv').config();
+const productRouter = require('./routes/products.js')
 
+const port = process.env.PORT || 5000;
+const mongoURI = process.env.MONGO_URI || "";
+const mongoose = require('mongoose');
+
+mongoose.connect(mongoURI)
+    .then(() => console.log("DB Connected"))
+    .catch((err) => console.log(err));
 // Define a route
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
+
+
+app.use("/api", productRouter);
+
 
 // Start the server
 app.listen(port, () => {

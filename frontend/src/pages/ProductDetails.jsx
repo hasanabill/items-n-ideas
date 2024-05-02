@@ -12,7 +12,7 @@ const ProductDetails = () => {
             price: 50.99,
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a odio vel odio viverra ultricies nec sit amet magna. In non ex id dolor ultrices tempus ac et libero.",
             images: [
-                "https://via.placeholder.com/500x500?text=Product+Image+1",
+                `https://via.placeholder.com/500x500?text=${id}`,
                 "https://via.placeholder.com/500x500?text=Product+Image+2",
                 "https://via.placeholder.com/500x500?text=Product+Image+3"
             ],
