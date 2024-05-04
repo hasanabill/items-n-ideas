@@ -7,6 +7,7 @@ import Products from "../pages/Products";
 import Admin from "../pages/Admin";
 import About from "../pages/About";
 import ProductDetails from "../pages/ProductDetails";
+import Login from "../pages/Login";
 
 const router = createBrowserRouter([
     {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
             {
                 path: "/about",
                 element: <About />,
+            },
+            {
+                path: "/getin",
+                element: <Login />,
             },
             {
                 path: "/adminn",

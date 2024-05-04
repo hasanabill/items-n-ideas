@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import ProductCard from "../components/ProductCard";
+import axios from 'axios';
+import { server } from "../Routes/server";
 
 const Products = () => {
     const [products, setProducts] = useState([]);
@@ -11,50 +13,40 @@ const Products = () => {
     const [productsPerPage] = useState(6);
 
     useEffect(() => {
-        const sampleProducts = [
-            { id: 1, name: "Product 1", price: 10, category: "electronics" },
-            { id: 2, name: "Product 2", price: 20, category: "clothing" },
-            { id: 3, name: "Product 3", price: 30, category: "electronics" },
-            { id: 4, name: "Product 4", price: 15, category: "clothing" },
-            { id: 5, name: "Product 4", price: 15, category: "Sneakers" },
-            { id: 6, name: "Product 5", price: 25, category: "electronics" },
-            { id: 7, name: "Product 6", price: 75, category: "SmartPhone" },
-            { id: 8, name: "Product 7", price: 40, category: "electronics" },
-            { id: 9, name: "Product 8", price: 50, category: "clothing" },
-            { id: 10, name: "Product 9", price: 60, category: "electronics" },
-            { id: 11, name: "Product 10", price: 70, category: "clothing" },
-            { id: 12, name: "Product 11", price: 80, category: "Sneakers" },
-            { id: 13, name: "Product 12", price: 90, category: "electronics" },
-            { id: 14, name: "Product 13", price: 100, category: "SmartPhone" },
-            { id: 15, name: "Product 14", price: 110, category: "electronics" },
-            { id: 16, name: "Product 15", price: 120, category: "clothing" },
-            { id: 17, name: "Product 16", price: 130, category: "electronics" },
-            { id: 18, name: "Product 17", price: 140, category: "clothing" },
-            { id: 19, name: "Product 18", price: 150, category: "Sneakers" },
-            { id: 20, name: "Product 19", price: 160, category: "electronics" },
-            { id: 21, name: "Product 20", price: 170, category: "SmartPhone" },
-        ];
+        // Fetch products from the backend API
+        const url = `${server}/api/products`
+        console.log('url', url)
+        axios.get(url)
+            .then(response => {
+                console.log('all ', response.data)
+                setProducts(response.data);
+                setFilteredProducts(response.data);
 
-        setProducts(sampleProducts);
-        setFilteredProducts(sampleProducts);
-
-        const uniqueCategories = [...new Set(sampleProducts.map(product => product.category))];
-        setCategories(['All Products', ...uniqueCategories]);
+                const uniqueCategories = [...new Set(response.data.map(product => product.categories))];
+                setCategories(['All Products', ...uniqueCategories]);
+            })
+            .catch(error => {
+                console.error('Error fetching products:', error);
+            });
     }, []);
 
     useEffect(() => {
         if (filterType === 'All Products') {
             setFilteredProducts(products);
         } else {
-            const filtered = products.filter(product => product.category === filterType);
+            const filtered = products.filter(product => product.categories.includes(filterType));
             setFilteredProducts(filtered);
         }
     }, [filterType, products]);
 
     const sortProducts = (products, sortType) => {
         return [...products].sort((a, b) => {
+
+            const nameA = a.name || '';
+            const nameB = b.name || '';
+
             if (sortType === 'name') {
-                return a.name.localeCompare(b.name);
+                return nameA.localeCompare(nameB);
             } else if (sortType === 'price') {
                 return a.price - b.price;
             }
@@ -95,7 +87,7 @@ const Products = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {currentProducts.map((product) => (
                     <ProductCard
-                        key={product.id}
+                        key={product._id}
                         product={product}
                     />
                 ))}

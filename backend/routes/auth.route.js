@@ -18,7 +18,7 @@ router.post('/register', async (req, res) => {
 
 })
 
-//login 
+//login
 router.post("/login", async (req, res) => {
     try {
         const foundUser = await user.findOne({ username: req.body.username });
@@ -34,7 +34,7 @@ router.post("/login", async (req, res) => {
             return res.status(401).json("Wrong credentials");
         }
 
-        const accessToken = jwt.sign({ id: foundUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const accessToken = jwt.sign({ id: foundUser._id }, process.env.JWT_SECRET, { expiresIn: '1m' });
 
         const { password, ...others } = foundUser._doc
 
