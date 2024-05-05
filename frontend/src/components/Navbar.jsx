@@ -95,7 +95,7 @@ const Navbar = () => {
             </div>
             {/* Mobile Menu */}
             <div
-                className={`md:hidden absolute w-full transition-all duration-300 ease-in z-[-1] ${isOpen
+                className={`md:hidden absolute w-full transition-all duration-300 ease-in z-[21] ${isOpen
                     ? " top-[50px] opacity-100"
                     : "opacity-0 top-[-550px]"
                     }`}

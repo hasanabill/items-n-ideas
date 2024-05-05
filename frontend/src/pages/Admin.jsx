@@ -71,7 +71,7 @@ const Admin = () => {
 
     return (
         <div className="container mx-auto">
-            <nav className="w-full h-16 bg-gray-200 flex items-center justify-between px-6">
+            <nav className="f w-full h-16 bg-gray-200 flex items-center justify-end px-6">
                 <Link to={`addproduct`}>Add new Product</Link>
             </nav>
             <h1 className="text-3xl font-semibold mb-4">Admin Panel</h1>
