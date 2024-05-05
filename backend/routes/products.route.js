@@ -59,6 +59,32 @@ router.post('/product', async (req, res) => {
     }
 });
 
+router.put("/product/:id", async (req, res) => {
+    try {
+        const productId = req.params.id;
+        const { name, price, categories, desc, images, link } = req.body;
+
+        const foundProduct = await product.findById(productId);
+
+        if (!foundProduct) {
+            return res.status(404).json({ error: "Product not found" });
+        }
+
+        foundProduct.name = name || foundProduct.name;
+        foundProduct.price = price || foundProduct.price;
+        foundProduct.categories = categories || foundProduct.categories;
+        foundProduct.desc = desc || foundProduct.desc;
+        foundProduct.images = images || foundProduct.images;
+        foundProduct.link = link || foundProduct.link;
+
+        const updatedProduct = await foundProduct.save();
+
+        res.status(200).json(updatedProduct);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 router.delete("/product/:id", async (req, res) => {
     try {
         const productId = req.params.id;
