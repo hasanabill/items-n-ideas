@@ -29,6 +29,7 @@ const ProductDetails = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
                     <img src={product.images[0]} alt={product.name} className="w-full" />
+                    <img src={product.images[1]} alt={product.name} className="w-full" />
                 </div>
 
                 <div>
