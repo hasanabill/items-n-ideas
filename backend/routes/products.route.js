@@ -35,9 +35,10 @@ router.get('/product/:id', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
 router.post('/product', async (req, res) => {
     try {
-        const { name, price, categories, desc, images } = req.body;
+        const { name, price, categories, desc, images, link } = req.body;
 
         // Create a new product instance
         const newProduct = new product({
@@ -45,7 +46,8 @@ router.post('/product', async (req, res) => {
             price,
             categories,
             desc,
-            images
+            images,
+            link
         });
 
         // Save the product to the database
@@ -56,5 +58,24 @@ router.post('/product', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+router.delete("/product/:id", async (req, res) => {
+    try {
+        const productId = req.params.id;
+
+        const foundProduct = await product.findById(productId);
+
+        if (!foundProduct) {
+            return res.status(404).json({ error: "Product not found" });
+        }
+
+        await product.deleteOne({ _id: productId });
+
+        res.status(200).json({ message: "Product deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 
 module.exports = router;

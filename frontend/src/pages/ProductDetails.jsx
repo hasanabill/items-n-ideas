@@ -1,25 +1,23 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import axios from 'axios';
+import { server } from "../Routes/server";
 
 const ProductDetails = () => {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
 
     useEffect(() => {
-        const sampleProduct = {
-            id: id,
-            name: "Product Name",
-            price: 50.99,
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a odio vel odio viverra ultricies nec sit amet magna. In non ex id dolor ultrices tempus ac et libero.",
-            images: [
-                `https://via.placeholder.com/500x500?text=${id}`,
-                "https://via.placeholder.com/500x500?text=Product+Image+2",
-                "https://via.placeholder.com/500x500?text=Product+Image+3"
-            ],
 
-        };
+        const apiUrl = `${server}/api/product/${id}`;
 
-        setProduct(sampleProduct);
+        axios.get(apiUrl)
+            .then(response => {
+                setProduct(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching product details:', error);
+            });
     }, [id]);
 
     if (!product) {
@@ -35,9 +33,9 @@ const ProductDetails = () => {
 
                 <div>
                     <h1 className="text-3xl font-semibold mb-4">{product.name}</h1>
-                    <p className="text-gray-700 mb-4">{product.description}</p>
+                    <p className="text-gray-700 mb-4">{product.desc}</p>
                     <p className="text-lg font-semibold mb-4">${product.price}</p>
-                    <p className="text-lg font-semibold mb-4">id: {product.id}</p>
+                    <a target="_blank" className="py-3 px-5 rounded-xl bg-gray-700 text-white" href={`${product.link}`}>Buy from amazon</a>
                 </div>
             </div>
         </div>
