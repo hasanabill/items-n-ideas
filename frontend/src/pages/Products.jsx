@@ -13,7 +13,6 @@ const Products = () => {
     const [productsPerPage] = useState(6);
 
     useEffect(() => {
-        // Fetch products from the backend API
         const url = `${server}/api/products`
         console.log('url', url)
         axios.get(url)
@@ -63,7 +62,7 @@ const Products = () => {
     const paginate = pageNumber => setCurrentPage(pageNumber);
 
     return (
-        <div className="container mx-auto">
+        <div className="container min-h-screen mx-auto">
             <h1 className="text-2xl font-semibold my-4 text-center">All Products</h1>
             <div className="flex flex-col md:flex-row justify-center items-center mb-4">
                 <select
