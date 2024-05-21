@@ -27,7 +27,7 @@ const Home = () => {
     }, []);
 
     return (
-        <div>
+        <div className="animatee">
             <Swiper
                 modules={[Navigation, Pagination, Scrollbar, A11y]}
                 navigation
@@ -38,7 +38,7 @@ const Home = () => {
                         className="bg-cover bg-center h-[70%] flex justify-center items-center"
                         style={{ backgroundImage: `url(${image1})` }}
                     >
-                        <div className="max-w-3xl  my-36 bg-black text-white bg-opacity-50 p-8 rounded-lg shadow-md">
+                        <div className="max-w-3xl  my-60 bg-black text-white bg-opacity-50 p-8 rounded-lg shadow-md">
                             <h1 className="text-4xl font-bold mb-6 text-center">Welcome to Items and Ideas</h1>
                             <p className="text-lg mb-8 text-center">Explore our collection of products and find what you need.</p>
                             <div className="flex justify-center mb-8">
@@ -52,10 +52,10 @@ const Home = () => {
                 </SwiperSlide>
                 <SwiperSlide>
                     <div
-                        className="bg-cover bg-center min-h-screen flex justify-center items-center"
+                        className="bg-cover bg-center h-[70%] flex justify-center items-center"
                         style={{ backgroundImage: `url(${image2})` }}
                     >
-                        <div className="max-w-3xl bg-white bg-opacity-75 p-8 rounded-lg shadow-md text-gray-900">
+                        <div className="max-w-3xl my-60 bg-white bg-opacity-75 p-8 rounded-lg shadow-md text-gray-900">
                             <h1 className="text-4xl font-bold mb-6 text-center">Find the Best Products Here</h1>
                             <p className="text-lg mb-8 text-center">Our store offers a wide variety of products that cater to all your needs.</p>
                             <div className="flex justify-center mb-8">
@@ -69,10 +69,10 @@ const Home = () => {
                 </SwiperSlide>
                 <SwiperSlide>
                     <div
-                        className="bg-cover bg-center min-h-screen flex justify-center items-center"
+                        className="bg-cover bg-center h-[70%] flex justify-center items-center"
                         style={{ backgroundImage: `url(${image3})` }}
                     >
-                        <div className="max-w-3xl bg-white bg-opacity-75 p-8 rounded-lg shadow-md text-gray-900">
+                        <div className="max-w-3xl my-60 bg-white bg-opacity-75 p-8 rounded-lg shadow-md text-gray-900">
                             <h1 className="text-4xl font-bold mb-6 text-center">Discover Our New Collection</h1>
                             <p className="text-lg mb-8 text-center">Stay ahead with the latest trends and enjoy exclusive offers.</p>
                             <div className="flex justify-center mb-8">
@@ -89,7 +89,7 @@ const Home = () => {
             <div className="container mx-auto py-8">
                 <h2 className="text-3xl font-semibold mb-4">Latest Products</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {latestProducts.map(product => (
+                    {latestProducts.slice(1).map(product => (
                         <ProductCard key={product._id} product={product} />
                     ))}
                 </div>

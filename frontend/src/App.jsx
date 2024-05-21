@@ -8,9 +8,11 @@ import 'react-toastify/dist/ReactToastify.css';
 function App() {
 
   return (
-    <main className="lg:w-[1440px] mx-auto">
+    <main className="app">
       <Navbar />
-      <Outlet />
+      <div className='min-h-screen'>
+        <Outlet />
+      </div>
       <Footer />
       <ToastContainer />
     </main>

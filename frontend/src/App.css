@@ -1,14 +1,7 @@
-.slide-in {
-    transition: transform 0.5s ease-in-out;
-    transform: translateX(0);
+.app {
+    background-color: antiquewhite;
 }
 
-@keyframes slideIn {
-    from {
-        transform: translateX(-100%);
-    }
-
-    to {
-        transform: translateX(0);
-    }
+.animatee {
+    /* background-color: black; */
 }
