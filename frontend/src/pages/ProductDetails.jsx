@@ -6,10 +6,12 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/bundle';
+import Loader from "../components/Loader";
 
 const ProductDetails = () => {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
 
@@ -18,14 +20,19 @@ const ProductDetails = () => {
         axios.get(apiUrl)
             .then(response => {
                 setProduct(response.data);
+                setLoading(false);
             })
             .catch(error => {
                 console.error('Error fetching product details:', error);
             });
     }, [id]);
 
-    if (!product) {
-        return <div>Loading...</div>;
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center min-h-screen">
+                <Loader />
+            </div>
+        );
     }
 
     return (

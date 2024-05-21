@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import ProductCard from "../components/ProductCard";
 import axios from 'axios';
 import { server } from "../Routes/server";
+import Loader from "../components/Loader";
 
 const Products = () => {
     const [products, setProducts] = useState([]);
@@ -11,21 +12,22 @@ const Products = () => {
     const [categories, setCategories] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [productsPerPage] = useState(6);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const url = `${server}/api/products`
-        console.log('url', url)
+        const url = `${server}/api/products`;
         axios.get(url)
             .then(response => {
-                console.log('all ', response.data)
                 setProducts(response.data);
                 setFilteredProducts(response.data);
+                setLoading(false);
 
                 const uniqueCategories = [...new Set(response.data.map(product => product.categories))];
                 setCategories(['All Products', ...uniqueCategories]);
             })
             .catch(error => {
                 console.error('Error fetching products:', error);
+                setLoading(false);
             });
     }, []);
 
@@ -40,10 +42,8 @@ const Products = () => {
 
     const sortProducts = (products, sortType) => {
         return [...products].sort((a, b) => {
-
             const nameA = a.name || '';
             const nameB = b.name || '';
-
             if (sortType === 'name') {
                 return nameA.localeCompare(nameB);
             } else if (sortType === 'price') {
@@ -60,6 +60,14 @@ const Products = () => {
     const currentProducts = sortedProducts.slice(indexOfFirstProduct, indexOfLastProduct);
 
     const paginate = pageNumber => setCurrentPage(pageNumber);
+
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center min-h-screen">
+                <Loader />
+            </div>
+        );
+    }
 
     return (
         <div className="container min-h-screen mx-auto">

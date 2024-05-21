@@ -12,19 +12,31 @@ import 'swiper/css/bundle';
 import image1 from '../assets/hero1.jpg';
 import image2 from '../assets/hero2.jpg';
 import image3 from '../assets/hero3.jpg';
+import Loader from "../components/Loader";
 
 const Home = () => {
     const [latestProducts, setLatestProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         axios.get(`${server}/api/products`)
             .then(response => {
                 setLatestProducts(response.data);
+                setLoading(false);
             })
             .catch(error => {
                 console.error('Error fetching latest products:', error);
             });
     }, []);
+
+
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center min-h-screen">
+                <Loader />
+            </div>
+        );
+    }
 
     return (
         <div className="animatee">

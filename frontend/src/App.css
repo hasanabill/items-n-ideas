@@ -1,3 +1,11 @@
 .app {
-    background-color: antiquewhite;
+    background-color: rgba(251, 246, 239, 0.859);
+}
+
+.product-card {
+    transition: transform 0.4s ease-in-out;
+}
+
+.product-card:hover {
+    transform: scale(1.02);
 }
