@@ -3,7 +3,7 @@
 }
 
 .product-card {
-    transition: transform 0.4s ease-in-out;
+    transition: transform 0.5s ease-in-out;
 }
 
 .product-card:hover {
