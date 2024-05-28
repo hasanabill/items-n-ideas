@@ -1,8 +1,19 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
+
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem('accessToken');
+        navigate('/getin');
+    };
+
+    const isAuthenticated = () => {
+        return !!localStorage.getItem('accessToken');
+    };
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
@@ -25,7 +36,7 @@ const Navbar = () => {
     ];
 
     return (
-        <nav className="bg-gray-800 shadow-lg">
+        <nav className="bg-teal-900 py-2 shadow-lg">
             <div className="max-w-7xl mx-auto px-4">
                 <div className="flex justify-between">
                     <div className="flex space-x-4">
@@ -55,11 +66,23 @@ const Navbar = () => {
                             <Link
                                 key={index}
                                 to={link.path}
-                                className="py-4 px-2 text-gray-300 hover:text-white hover:bg-gray-700 rounded"
+                                className="py-2 px-3 text-gray-300 hover:text-white hover:bg-gray-700 rounded-md"
                             >
                                 {link.name}
                             </Link>
                         ))}
+                        {isAuthenticated() && (
+                            <>
+                                <Link
+                                    className="block py-2 px-3 text-base font-medium text-white rounded-md hover:bg-gray-900" to='adminn'>Admin</Link>
+                                <button
+                                    onClick={handleLogout}
+                                    className="py-2 px-3  bg-red-500 hover:text-white hover:bg-red-900 rounded-md"
+                                >
+                                    Logout
+                                </button>
+                            </>
+                        )}
                     </div>
                     <div className="md:hidden flex items-center">
                         <button
@@ -111,7 +134,18 @@ const Navbar = () => {
                             {link.name}
                         </Link>
                     ))}
-
+                    {isAuthenticated() && (
+                        <>
+                            <Link
+                                className="block py-2 px-3 text-base font-medium text-white rounded-md hover:bg-gray-900" to='adminn'>Admin</Link>
+                            <button
+                                onClick={handleLogout}
+                                className="py-4 px-2 text-gray-300 hover:text-white hover:bg-gray-700 rounded"
+                            >
+                                Logout
+                            </button>
+                        </>
+                    )}
                 </div>
             </div>
         </nav>

@@ -23,7 +23,7 @@ router.post("/login", async (req, res) => {
     try {
         const foundUser = await user.findOne({ username: req.body.username });
         if (!foundUser) {
-            return res.status(401).json("Wrong credentials");
+            return res.status(401).json("User doesn't exist");
         }
 
         const decryptedPassword = CryptoJS.AES.decrypt(
@@ -31,10 +31,10 @@ router.post("/login", async (req, res) => {
             process.env.PASS_KEY
         ).toString(CryptoJS.enc.Utf8);
         if (decryptedPassword !== req.body.password) {
-            return res.status(401).json("Wrong credentials");
+            return res.status(401).json("Incorrect information");
         }
 
-        const accessToken = jwt.sign({ id: foundUser._id, username: foundUser.username }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const accessToken = jwt.sign({ id: foundUser._id, username: foundUser.username }, process.env.JWT_SECRET);
 
         const { password, ...others } = foundUser._doc
 

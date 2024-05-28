@@ -9,6 +9,11 @@ import About from "../pages/About";
 import ProductDetails from "../pages/ProductDetails";
 import Login from "../pages/Login";
 import AddProduct from "../pages/AddProduct";
+import ProtectedRoute from "../components/ProtectedRoute";
+
+const isAuthenticated = () => {
+    return !!localStorage.getItem('accessToken');
+};
 
 const router = createBrowserRouter([
     {
@@ -36,12 +41,17 @@ const router = createBrowserRouter([
                 element: <Login />,
             },
             {
-                path: "/adminn",
-                element: <Admin />,
-            },
-            {
-                path: "/adminn/addproduct",
-                element: <AddProduct />,
+                element: <ProtectedRoute isAllowed={isAuthenticated()} />,
+                children: [
+                    {
+                        path: "/adminn",
+                        element: <Admin />,
+                    },
+                    {
+                        path: "/adminn/addproduct",
+                        element: <AddProduct />,
+                    },
+                ]
             },
         ]
     },
