@@ -8,6 +8,8 @@ const Navbar = () => {
 
     const handleLogout = () => {
         localStorage.removeItem('accessToken');
+        localStorage.removeItem('username');
+        localStorage.removeItem('email');
         navigate('/getin');
     };
 

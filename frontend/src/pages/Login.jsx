@@ -14,18 +14,29 @@ const Login = () => {
     } = useForm();
 
     const [errorMessage, setErrorMessage] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const onSubmit = async (data) => {
         try {
+            setLoading(true);
             const response = await axios.post(`${server}/api/auth/login`, data);
 
-            const { accessToken } = response.data;
+            const { accessToken, username, email } = response.data;
 
-            localStorage.setItem('accessToken', accessToken);
-
-            navigate('/adminn');
+            if (accessToken) {
+                localStorage.setItem('accessToken', accessToken);
+                localStorage.setItem('username', username);
+                localStorage.setItem('email', email);
+                setErrorMessage('');
+                navigate('/adminn');
+            }
+            if (!accessToken) {
+                setLoading(false);
+                setErrorMessage('Invalid username or passwordd');
+            }
         } catch (error) {
             setErrorMessage('Invalid username or password');
+            setLoading(false)
         }
     };
 
@@ -49,6 +60,9 @@ const Login = () => {
                         </div>
                         {errors.password && <p className="mt-1 text-sm text-red-600">Enter Password</p>}
                     </div>
+                    {loading && <div className="flex items-center justify-center">
+                        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
+                    </div>}
                     <div>
                         <button type="submit" className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-800 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                             Sign in
