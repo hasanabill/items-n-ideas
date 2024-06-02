@@ -4,22 +4,25 @@ import { server } from "../Routes/server";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const AddProduct = () => {
     const { register, handleSubmit } = useForm();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
+    const [description, setDescription] = useState('');
 
     const onSubmit = async (data) => {
         try {
-            setIsLoading(true); // Start loading
+            setIsLoading(true);
 
             const imageUrls = await uploadImages(data.images);
             const productData = {
                 name: data.name,
                 price: data.price,
                 categories: data.categories,
-                desc: data.desc,
+                desc: description,
                 images: imageUrls,
                 link: data.link
             };
@@ -33,7 +36,7 @@ const AddProduct = () => {
         } catch (error) {
             toast.error(error.message);
         } finally {
-            setIsLoading(false); // Stop loading
+            setIsLoading(false);
         }
     };
 
@@ -74,7 +77,7 @@ const AddProduct = () => {
                     </div>
                     <div className="mb-4">
                         <label htmlFor="desc" className="text-lg font-medium text-gray-700">Description</label>
-                        <textarea  {...register("desc")} type="text" name="desc" className="w-full h-28 border p-3 border-black rounded-lg" />
+                        <ReactQuill value={description} onChange={setDescription} className="" />
                     </div>
                     <div className="mb-4">
                         <label htmlFor="images" className="text-lg font-medium text-gray-700">Images</label>

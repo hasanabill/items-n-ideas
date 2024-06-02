@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import axios from 'axios';
 import { server } from "../Routes/server";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { A11y, Navigation, Pagination, Scrollbar } from "swiper/modules";
+import { A11y, Autoplay, Navigation, Pagination, Scrollbar } from "swiper/modules";
 import 'swiper/css';
 import 'swiper/css/bundle';
 
@@ -41,8 +41,9 @@ const Home = () => {
     return (
         <div className="animatee">
             <Swiper
-                modules={[Navigation, Pagination, Scrollbar, A11y]}
+                modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
                 navigation
+                autoplay={{ delay: 5000, disableOnInteraction: false }}
                 pagination={{ clickable: true }}
             >
                 <SwiperSlide>
@@ -54,7 +55,7 @@ const Home = () => {
                             <h1 className="text-4xl font-bold mb-6 text-center">Welcome to Items and Ideas</h1>
                             <p className="text-lg mb-8 text-center">Explore our collection of products and find what you need.</p>
                             <div className="flex justify-center mb-8">
-                                <Link to="/products" className="text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md transition-colors duration-300 ease-in-out flex items-center">
+                                <Link to="/products" className="text-white bg-teal-600 hover:bg-teal-900 px-4 py-2 rounded-md transition-colors duration-300 ease-in-out flex items-center">
                                     Explore Products
                                     <FiArrowRight className="ml-2" />
                                 </Link>
