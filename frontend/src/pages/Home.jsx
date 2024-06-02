@@ -3,7 +3,6 @@ import { FiArrowRight } from "react-icons/fi";
 import { useState, useEffect } from "react";
 import axios from 'axios';
 import { server } from "../Routes/server";
-import ProductCard from './../components/ProductCard';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { A11y, Navigation, Pagination, Scrollbar } from "swiper/modules";
 import 'swiper/css';
@@ -13,6 +12,7 @@ import image1 from '../assets/hero1.jpg';
 import image2 from '../assets/hero2.jpg';
 import image3 from '../assets/hero3.jpg';
 import Loader from "../components/Loader";
+import FeaturedCard from "../components/FeaturedCard";
 
 const Home = () => {
     const [latestProducts, setLatestProducts] = useState([]);
@@ -100,9 +100,9 @@ const Home = () => {
 
             <div className="container mx-auto py-8">
                 <h2 className="text-3xl font-semibold mb-4">Latest Products</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
                     {latestProducts.slice(1).map(product => (
-                        <ProductCard key={product._id} product={product} />
+                        <FeaturedCard key={product._id} product={product} />
                     ))}
                 </div>
             </div>
