@@ -2,9 +2,10 @@ const user = require('../models/user');
 const router = require('express').Router();
 const CryptoJS = require('crypto-js');
 const jwt = require('jsonwebtoken');
+const verifyToken = require('../middleware/verifyToken');
 
 // Register
-router.post('/register', async (req, res) => {
+router.post('/register', verifyToken, async (req, res) => {
     const newUser = new user({
         username: req.body.username,
         email: req.body.email,

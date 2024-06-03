@@ -91,7 +91,7 @@ const AddProduct = () => {
                     <button type="submit" className="mt-5 w-full h-10 bg-gray-800 hover:bg-gray-500 text-white text-lg rounded-lg">
                         Add Product
                     </button>
-                    <Link to='/adminn' className="inline-block text-center mt-5 w-full py-2 bg-red-800 hover:bg-gray-500 text-white text-lg rounded-lg">
+                    <Link to='/adminn/manageproducts' className="inline-block text-center mt-5 w-full py-2 bg-red-800 hover:bg-gray-500 text-white text-lg rounded-lg">
                         Go back
                     </Link>
                 </div>

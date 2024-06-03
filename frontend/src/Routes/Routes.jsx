@@ -11,6 +11,9 @@ import Login from "../pages/Login";
 import AddProduct from "../pages/AddProduct";
 import ProtectedRoute from "../components/ProtectedRoute";
 import EditProduct from "../pages/EditProduct";
+import ManageUser from "../pages/ManageUser";
+import AdminLayout from "./AdminLayout";
+import ManageProducts from "../pages/ManageProducts";
 
 const isAuthenticated = () => {
     return !!localStorage.getItem('accessToken');
@@ -46,15 +49,29 @@ const router = createBrowserRouter([
                 children: [
                     {
                         path: "/adminn",
-                        element: <Admin />,
-                    },
-                    {
-                        path: "/adminn/addproduct",
-                        element: <AddProduct />,
-                    },
-                    {
-                        path: "/adminn/editproduct/:id",
-                        element: <EditProduct />,
+                        element: <AdminLayout />,
+                        children: [
+                            {
+                                path: "",
+                                element: <Admin />,
+                            },
+                            {
+                                path: "manageuser",
+                                element: <ManageUser />,
+                            },
+                            {
+                                path: "manageproducts",
+                                element: <ManageProducts />,
+                            },
+                            {
+                                path: "addproduct",
+                                element: <AddProduct />,
+                            },
+                            {
+                                path: "editproduct/:id",
+                                element: <EditProduct />,
+                            },
+                        ]
                     },
                 ]
             },
