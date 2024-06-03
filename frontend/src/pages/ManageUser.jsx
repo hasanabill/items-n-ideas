@@ -4,12 +4,14 @@ import { server } from "../Routes/server";
 import { toast } from 'react-toastify';
 import DeleteConfirmationModal from '../components/DeleteConfirmModal';
 import RegisterUserModal from '../components/RegisterUserModal'; // Import the new modal
+import Loader from '../components/Loader';
 
 const ManageUser = () => {
     const [users, setUsers] = useState([]);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [selectedUserId, setSelectedUserId] = useState(null);
     const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetchUsers();
@@ -22,7 +24,10 @@ const ManageUser = () => {
                     'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
                 }
             });
-            setUsers(response.data);
+            if (response.status === 200) {
+                setUsers(response.data);
+                setLoading(false);
+            }
         } catch (error) {
             console.error('Error fetching users:', error);
             toast.error('Error fetching users');
@@ -62,6 +67,10 @@ const ManageUser = () => {
     const handleCloseRegisterModal = () => {
         setIsRegisterModalOpen(false);
     };
+
+    if (loading) {
+        return <Loader />
+    }
 
     return (
         <div className="container mx-auto py-8">
