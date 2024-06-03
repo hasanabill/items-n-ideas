@@ -10,7 +10,7 @@ function App() {
   return (
     <main className="app">
       <Navbar />
-      <div className='min-h-screen'>
+      <div className='min-h-screen py-10'>
         <Outlet />
       </div>
       <Footer />

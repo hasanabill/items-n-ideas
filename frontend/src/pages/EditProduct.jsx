@@ -2,16 +2,41 @@ import { useForm } from "react-hook-form";
 import axios from 'axios';
 import { server } from "../Routes/server";
 import { toast } from "react-toastify";
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import Loader from "../components/Loader";
 
-const AddProduct = () => {
-    const { register, handleSubmit } = useForm();
+const EditProduct = () => {
+    const { id } = useParams();
+    const { register, handleSubmit, setValue } = useForm();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
-    const [description, setDescription] = useState('');
+    const [product, setProduct] = useState(null);
+    const [description, setDescription] = useState(''); // State for React Quill
+
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                const response = await axios.get(`${server}/api/product/${id}`);
+                const productData = response.data;
+
+                setProduct(productData);
+
+                // Prefill form with existing product data
+                setValue('name', productData.name);
+                setValue('price', productData.price);
+                setValue('categories', productData.categories);
+                setDescription(productData.desc); // Set React Quill description
+                setValue('link', productData.link);
+            } catch (error) {
+                toast.error('Error fetching product details');
+            }
+        };
+
+        fetchProduct();
+    }, [id, setValue]);
 
     const onSubmit = async (data) => {
         try {
@@ -23,14 +48,14 @@ const AddProduct = () => {
                 price: data.price,
                 categories: data.categories,
                 desc: description,
-                images: imageUrls,
+                images: imageUrls.length ? imageUrls : product.images, // Use existing images if no new images are uploaded
                 link: data.link
             };
 
-            const response = await axios.post(`${server}/api/product`, productData);
+            const response = await axios.put(`${server}/api/product/${id}`, productData);
 
-            if (response.status === 201) {
-                toast.success("Product added successfully!");
+            if (response.status === 200) {
+                toast.success("Product updated successfully!");
                 navigate("/adminn");
             }
         } catch (error) {
@@ -59,6 +84,14 @@ const AddProduct = () => {
         }
     };
 
+    if (!product) {
+        return (
+            <div className="flex justify-center items-center min-h-screen">
+                <Loader />
+            </div>
+        );
+    }
+
     return (
         <div className="flex justify-center items-center">
             <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-lg">
@@ -77,7 +110,7 @@ const AddProduct = () => {
                     </div>
                     <div className="mb-4">
                         <label htmlFor="desc" className="text-lg font-medium text-gray-700">Description</label>
-                        <ReactQuill value={description} onChange={setDescription} className="" />
+                        <ReactQuill value={description} onChange={setDescription} className="w-full  p-3 rounded-lg" />
                     </div>
                     <div className="mb-4">
                         <label htmlFor="images" className="text-lg font-medium text-gray-700">Images</label>
@@ -89,7 +122,7 @@ const AddProduct = () => {
                     </div>
                     {isLoading && <div className="mb-4 text-center">Uploading images...</div>}
                     <button type="submit" className="mt-5 w-full h-10 bg-gray-800 hover:bg-gray-500 text-white text-lg rounded-lg">
-                        Add Product
+                        Update Product
                     </button>
                     <Link to='/adminn' className="inline-block text-center mt-5 w-full py-2 bg-red-800 hover:bg-gray-500 text-white text-lg rounded-lg">
                         Go back
@@ -100,4 +133,4 @@ const AddProduct = () => {
     );
 };
 
-export default AddProduct;
+export default EditProduct;

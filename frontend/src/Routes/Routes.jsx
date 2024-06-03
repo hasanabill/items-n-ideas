@@ -10,6 +10,7 @@ import ProductDetails from "../pages/ProductDetails";
 import Login from "../pages/Login";
 import AddProduct from "../pages/AddProduct";
 import ProtectedRoute from "../components/ProtectedRoute";
+import EditProduct from "../pages/EditProduct";
 
 const isAuthenticated = () => {
     return !!localStorage.getItem('accessToken');
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
                     {
                         path: "/adminn/addproduct",
                         element: <AddProduct />,
+                    },
+                    {
+                        path: "/adminn/editproduct/:id",
+                        element: <EditProduct />,
                     },
                 ]
             },
