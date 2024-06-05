@@ -19,6 +19,7 @@ app.get('/', (req, res) => {
     res.send("Server is running");
 });
 app.use("/api", require('./routes/products.route.js'));
+app.use("/api/hero", require('./routes/hero.route.js'));
 app.use("/api/user", require('./routes/user.route.js'));
 app.use("/api/auth", require('./routes/auth.route.js'));
 

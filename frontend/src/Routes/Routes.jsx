@@ -14,6 +14,7 @@ import EditProduct from "../pages/EditProduct";
 import ManageUser from "../pages/ManageUser";
 import AdminLayout from "./AdminLayout";
 import ManageProducts from "../pages/ManageProducts";
+import HeroImage from "../pages/HeroImage";
 
 const isAuthenticated = () => {
     return !!localStorage.getItem('accessToken');
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
                             {
                                 path: "editproduct/:id",
                                 element: <EditProduct />,
+                            },
+                            {
+                                path: "managehero",
+                                element: <HeroImage />,
                             },
                         ]
                     },
