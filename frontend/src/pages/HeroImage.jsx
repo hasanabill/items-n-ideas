@@ -17,10 +17,40 @@ const HeroImage = () => {
                 images: imageUrls,
             };
 
-            const response = await axios.post(`${server}/api/heroes`, heroData);
+            const response = await axios.post(`${server}/api/hero`, heroData, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                }
+            });
 
             if (response.status === 201) {
                 toast.success("Hero images uploaded successfully!");
+            }
+        } catch (error) {
+            toast.error(error.message);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const onUpdate = async (data) => {
+        try {
+            setIsLoading(true);
+
+            const imageUrls = await uploadImages(data.images);
+            const heroData = {
+                images: imageUrls,
+            };
+
+            const heroId = data.id;
+            const response = await axios.put(`${server}/api/hero/${heroId}`, heroData, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                }
+            });
+
+            if (response.status === 200) {
+                toast.success("Hero images updated successfully!");
             }
         } catch (error) {
             toast.error(error.message);
@@ -59,6 +89,23 @@ const HeroImage = () => {
                     {isLoading && <div className="mb-4 text-center">Uploading images...</div>}
                     <button type="submit" className="mt-5 w-full h-10 bg-gray-800 hover:bg-gray-500 text-white text-lg rounded-lg">
                         Upload Images
+                    </button>
+                </div>
+            </form>
+
+            <form onSubmit={handleSubmit(onUpdate)} className="w-full max-w-lg mt-10">
+                <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 rounded-xl">
+                    <div className="mb-4">
+                        <label htmlFor="id" className="text-lg font-medium text-gray-700">Hero ID</label>
+                        <input {...register("id")} type="text" name="id" className="w-full h-10 border px-3 border-black rounded-lg" />
+                    </div>
+                    <div className="mb-4">
+                        <label htmlFor="images" className="text-lg font-medium text-gray-700">Hero Images</label>
+                        <input {...register("images")} type="file" multiple name="images" className="py-1 w-full h-10 border px-3 border-black rounded-lg" />
+                    </div>
+                    {isLoading && <div className="mb-4 text-center">Uploading images...</div>}
+                    <button type="submit" className="mt-5 w-full h-10 bg-gray-800 hover:bg-gray-500 text-white text-lg rounded-lg">
+                        Update Images
                     </button>
                 </div>
             </form>
