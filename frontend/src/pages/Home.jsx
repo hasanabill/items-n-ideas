@@ -102,7 +102,7 @@ const Home = () => {
             <div className="container mx-auto py-8">
                 <h2 className="text-3xl font-semibold mb-4">Latest Products</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-                    {latestProducts.slice(1).map(product => (
+                    {latestProducts.slice(0).map(product => (
                         <FeaturedCard key={product._id} product={product} />
                     ))}
                 </div>
