@@ -26,6 +26,7 @@ router.post('/', verifyToken, async (req, res) => {
 
 router.put('/:id', verifyToken, async (req, res) => {
     const { images } = req.body;
+    console.log(images)
 
     try {
         const hero = await Hero.findById(req.params.id);
