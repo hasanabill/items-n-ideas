@@ -35,7 +35,6 @@ const HeroImage = () => {
                 images: imageUrls,
             };
 
-            const heroId = data.id;
             const response = await axios.put(`${server}/api/hero/${hero[0]?._id}`, heroData, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('accessToken')}`

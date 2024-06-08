@@ -1,11 +1,12 @@
 import { Navigate, Outlet } from 'react-router-dom';
 
-const ProtectedRoute = ({ isAllowed, redirectPath = '/getin', children }) => {
+const ProtectedRoute = () => {
+    const isAllowed = localStorage.getItem('accessToken')
     if (!isAllowed) {
-        return <Navigate to={redirectPath} replace />;
+        return <Navigate to="/getin" replace />;
     }
 
-    return children ? children : <Outlet />;
+    return <Outlet />;
 };
 
 export default ProtectedRoute;

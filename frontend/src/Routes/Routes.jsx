@@ -16,9 +16,6 @@ import AdminLayout from "./AdminLayout";
 import ManageProducts from "../pages/ManageProducts";
 import HeroImage from "../pages/HeroImage";
 
-const isAuthenticated = () => {
-    return !!localStorage.getItem('accessToken');
-};
 
 const router = createBrowserRouter([
     {
@@ -46,7 +43,7 @@ const router = createBrowserRouter([
                 element: <Login />,
             },
             {
-                element: <ProtectedRoute isAllowed={isAuthenticated()} />,
+                element: <ProtectedRoute />,
                 children: [
                     {
                         path: "/adminn",

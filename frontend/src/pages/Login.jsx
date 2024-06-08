@@ -28,15 +28,17 @@ const Login = () => {
                 localStorage.setItem('username', username);
                 localStorage.setItem('email', email);
                 setErrorMessage('');
-                navigate('/adminn');
-            }
-            if (!accessToken) {
                 setLoading(false);
-                setErrorMessage('Invalid username or passwordd');
+
+                // Trigger a re-render by updating a state or using a timeout
+                navigate('/adminn');
+            } else {
+                setLoading(false);
+                setErrorMessage('Invalid username or password');
             }
         } catch (error) {
             setErrorMessage('Invalid username or password');
-            setLoading(false)
+            setLoading(false);
         }
     };
 
