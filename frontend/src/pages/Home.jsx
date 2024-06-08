@@ -8,15 +8,29 @@ import { A11y, Autoplay, Navigation, Pagination, Scrollbar } from "swiper/module
 import 'swiper/css';
 import 'swiper/css/bundle';
 
-import image1 from '../assets/hero1.jpg';
-import image2 from '../assets/hero2.jpg';
-import image3 from '../assets/hero3.jpg';
 import Loader from "../components/Loader";
 import FeaturedCard from "../components/FeaturedCard";
 
 const Home = () => {
     const [latestProducts, setLatestProducts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [hero, setHero] = useState([]);
+
+    useEffect(() => {
+        getHero();
+    }, []);
+
+    const getHero = async () => {
+
+        try {
+            const response = await axios.get(`${server}/api/hero`);
+            setHero(response.data);
+            console.log(response.data)
+            setLoading(false);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     useEffect(() => {
         axios.get(`${server}/api/products`)
@@ -49,7 +63,7 @@ const Home = () => {
                 <SwiperSlide>
                     <div
                         className="bg-cover bg-center h-[70%] flex justify-center items-center"
-                        style={{ backgroundImage: `url(${image1})` }}
+                        style={{ backgroundImage: `url(${hero[0]?.images[0]})` }}
                     >
                         <div className="max-w-3xl  my-60 bg-black text-white bg-opacity-50 p-8 rounded-lg shadow-md">
                             <h1 className="text-4xl font-bold mb-6 text-center">Welcome to Items and Ideas</h1>
@@ -66,7 +80,7 @@ const Home = () => {
                 <SwiperSlide>
                     <div
                         className="bg-cover bg-center h-[70%] flex justify-center items-center"
-                        style={{ backgroundImage: `url(${image2})` }}
+                        style={{ backgroundImage: `url(${hero[0]?.images[1]})` }}
                     >
                         <div className="max-w-3xl my-60 bg-white bg-opacity-75 p-8 rounded-lg shadow-md text-gray-900">
                             <h1 className="text-4xl font-bold mb-6 text-center">Find the Best Products Here</h1>
@@ -83,7 +97,7 @@ const Home = () => {
                 <SwiperSlide>
                     <div
                         className="bg-cover bg-center h-[70%] flex justify-center items-center"
-                        style={{ backgroundImage: `url(${image3})` }}
+                        style={{ backgroundImage: `url(${hero[0]?.images[2]})` }}
                     >
                         <div className="max-w-3xl my-60 bg-white bg-opacity-75 p-8 rounded-lg shadow-md text-gray-900">
                             <h1 className="text-4xl font-bold mb-6 text-center">Discover Our New Collection</h1>
